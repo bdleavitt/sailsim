@@ -9,7 +9,7 @@ SailSim.createState = function createState() {
     motorMode: false,
     motorThrottle: 35,
     windFromDeg: 315,
-    windKn: 14,
+    windKn: 8,
     apparentWindKn: 0,
     pointOfSail: "Beam Reach",
     sail: {

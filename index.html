@@ -27,8 +27,11 @@
           <strong id="pointOfSailLabel">Beam Reach</strong>
         </div>
         <div class="canvas-top-right">
-          <button id="restartButton" class="restart-control" type="button" title="Restart simulation">
-            <span aria-hidden="true">&#8635;</span> Restart
+          <button id="restartButton" class="restart-control" type="button" title="Restart simulation" aria-label="Restart simulation">
+            <span aria-hidden="true">&#8635;</span> <span class="control-label">Restart</span>
+          </button>
+          <button id="fullscreenButton" class="restart-control" type="button" title="Toggle full screen" aria-label="Toggle full screen">
+            <span aria-hidden="true">&#9974;</span> <span class="control-label">Full Screen</span>
           </button>
           <label class="view-control">
             <input id="headingUp" type="checkbox" checked />
@@ -83,8 +86,8 @@
         <div class="control-group two-col">
           <label for="windDirection">Wind From Direction <span id="windDirValue">315°</span></label>
           <input id="windDirection" type="range" min="0" max="359" step="1" value="315" />
-          <label for="windSpeed">Wind Speed <span id="windSpeedValue">14 kn</span></label>
-          <input id="windSpeed" type="range" min="0" max="35" step="0.5" value="14" />
+          <label for="windSpeed">Wind Speed <span id="windSpeedValue">8 kn</span></label>
+          <input id="windSpeed" type="range" min="0" max="35" step="0.5" value="8" />
         </div>
 
         <div class="readouts">

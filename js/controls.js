@@ -122,7 +122,27 @@ SailSim.createControls = function createControls(state) {
     stopRudderReturn();
   };
 
-  inputs.rudderAngle.addEventListener("pointerdown", holdRudder);
+  // Jump/drag directly to a touch/pointer position instead of requiring the thumb to be grabbed exactly.
+  function setRudderFromClientX(clientX) {
+    const rect = inputs.rudderAngle.getBoundingClientRect();
+    const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+    const min = Number(inputs.rudderAngle.min);
+    const max = Number(inputs.rudderAngle.max);
+    const value = Math.round(min + ratio * (max - min));
+    state.rudderDeg = value;
+    inputs.rudderAngle.value = String(value);
+    updateReadouts();
+  }
+
+  inputs.rudderAngle.addEventListener("pointerdown", (event) => {
+    holdRudder();
+    setRudderFromClientX(event.clientX);
+    inputs.rudderAngle.setPointerCapture(event.pointerId);
+  });
+  inputs.rudderAngle.addEventListener("pointermove", (event) => {
+    if (!rudderIsHeld) return;
+    setRudderFromClientX(event.clientX);
+  });
   inputs.rudderAngle.addEventListener("keydown", holdRudder);
   inputs.rudderAngle.addEventListener("keyup", returnRudderToCenter);
   inputs.rudderAngle.addEventListener("blur", returnRudderToCenter);
@@ -131,6 +151,63 @@ SailSim.createControls = function createControls(state) {
   });
   window.addEventListener("pointercancel", () => {
     if (rudderIsHeld) returnRudderToCenter();
+  });
+
+  // Global left/right arrow keys drive the rudder without needing focus on the slider (game-style helm).
+  const KEY_RUDDER_DEG_PER_SECOND = 90;
+  let keyRudderFrame = 0;
+  let keyRudderDirection = 0;
+  let keyRudderPreviousTime = 0;
+
+  function keyRudderTick(time) {
+    if (keyRudderDirection === 0) {
+      keyRudderFrame = 0;
+      return;
+    }
+    const elapsedSeconds = Math.min((time - keyRudderPreviousTime) / 1000, 0.05);
+    keyRudderPreviousTime = time;
+    const min = Number(inputs.rudderAngle.min);
+    const max = Number(inputs.rudderAngle.max);
+    const step = KEY_RUDDER_DEG_PER_SECOND * elapsedSeconds;
+    const nextAngle = Math.max(min, Math.min(max, state.rudderDeg + keyRudderDirection * step));
+    state.rudderDeg = nextAngle;
+    inputs.rudderAngle.value = String(Math.round(nextAngle));
+    updateReadouts();
+    keyRudderFrame = requestAnimationFrame(keyRudderTick);
+  }
+
+  function startKeyRudder(direction) {
+    holdRudder();
+    if (keyRudderDirection === direction) return;
+    keyRudderDirection = direction;
+    keyRudderPreviousTime = performance.now();
+    if (!keyRudderFrame) keyRudderFrame = requestAnimationFrame(keyRudderTick);
+  }
+
+  function stopKeyRudder(direction) {
+    if (keyRudderDirection !== direction) return;
+    keyRudderDirection = 0;
+    cancelAnimationFrame(keyRudderFrame);
+    keyRudderFrame = 0;
+    returnRudderToCenter();
+  }
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    const active = document.activeElement;
+    const otherSliderFocused = active
+      && active.tagName === "INPUT"
+      && active.type === "range"
+      && active !== inputs.rudderAngle;
+    if (otherSliderFocused) return;
+    event.preventDefault();
+    if (event.repeat) return;
+    startKeyRudder(event.key === "ArrowLeft" ? -1 : 1);
+  });
+
+  window.addEventListener("keyup", (event) => {
+    if (event.key === "ArrowLeft") stopKeyRudder(-1);
+    else if (event.key === "ArrowRight") stopKeyRudder(1);
   });
 
   syncStateFromInputs();

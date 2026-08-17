@@ -81,6 +81,27 @@ h1 {
   overflow: hidden;
 }
 
+.sim-card.is-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  border-radius: 0;
+  display: flex;
+}
+
+.sim-card.is-fullscreen canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+body.fullscreen-active {
+  overflow: hidden;
+}
+
 canvas {
   width: 100%;
   height: auto;
@@ -123,6 +144,9 @@ canvas {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: calc(100% - 2.8rem);
 }
 
 .canvas-top-right .view-control {
@@ -156,6 +180,17 @@ canvas {
 .restart-control span {
   font-size: 0.95rem;
   line-height: 1;
+}
+
+.restart-control .control-label {
+  display: none;
+  font-size: 0.68rem;
+}
+
+@media (min-width: 1200px) {
+  .restart-control .control-label {
+    display: inline;
+  }
 }
 
 .motor-mode-control {
@@ -484,5 +519,29 @@ input[type="range"] {
   .view-control {
     top: 1.1rem;
     right: 1.1rem;
+  }
+
+  .canvas-top-right {
+    top: 1.1rem;
+    right: 1.1rem;
+  }
+
+  .restart-control {
+    font-size: 0.6rem;
+    padding: 0.3rem 0.55rem;
+  }
+
+  .helm-control input[type="range"] {
+    height: 2.4rem;
+  }
+
+  .helm-control input[type="range"]::-webkit-slider-thumb {
+    width: 34px;
+    height: 34px;
+  }
+
+  .helm-control input[type="range"]::-moz-range-thumb {
+    width: 34px;
+    height: 34px;
   }
 }

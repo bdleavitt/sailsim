@@ -196,7 +196,7 @@ SailSim.createRenderer = function createRenderer(canvas, state) {
 
   function drawCompass() {
     const cx = canvas.width - 108;
-    const cy = canvas.height - 190;
+    const cy = 118;
     const radius = 34;
     const headingDeg = ((math.radToDeg(state.boat.heading) + 360) % 360);
 
@@ -247,7 +247,7 @@ SailSim.createRenderer = function createRenderer(canvas, state) {
 
   function drawMiniMap() {
     const x = canvas.width - 190;
-    const y = canvas.height - 150;
+    const y = 180;
     const width = 164;
     const height = 122;
     const scale = Math.min((width - 18) / config.LAKE_WIDTH, (height - 18) / config.LAKE_HEIGHT);
