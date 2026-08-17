@@ -26,7 +26,7 @@ Open `http://localhost:5500`.
 - On-canvas pie-chart point-of-sail dial and a top-center point-of-sail pill
 - Large bounded lake with shoreline collision and named landmarks
 - Heading-up and north-up navigation views
-- Scrolling world camera, compass, coordinates, navigation status, and orientable minimap
+- Scrolling world camera, compass, coordinates, navigation status, and fixed north-up minimap
 - Live point-of-sail classification and instrument readouts
 
 See [PHYSICS.md](PHYSICS.md) for a full description of the sailing model — apparent
@@ -91,7 +91,7 @@ The rudder, mainsheet, Motor Mode switch, motor throttle, and slim Heading-Up sw
 
 ### Change camera, compass, sail, or visual effects
 
-Keep canvas-only changes in `js/renderer.js`. The renderer owns heading-up transforms, compass/minimap orientation, sail shape, and visual effects. Rendering should read state but should not mutate physics state. Effects intended to rotate with the map—shore, landmarks, water texture, and wind particles—must be drawn inside the same translated/rotated world context. Screen-fixed instruments belong outside that context.
+Keep canvas-only changes in `js/renderer.js`. The renderer owns heading-up transforms, compass orientation, fixed minimap drawing, sail shape, and visual effects. Rendering should read state but should not mutate physics state. Effects intended to rotate with the map—shore, landmarks, water texture, and wind particles—must be drawn inside the same translated/rotated world context. Screen-fixed instruments belong outside that context.
 
 ### Add new simulation systems
 
