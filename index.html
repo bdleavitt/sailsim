@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Points of Sail Simulator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Learning Simulator</p>
+        <h1>Points of Sail</h1>
+        <p class="subtitle">Trim the boom, steer with rudder, and learn how wind moves the boat.</p>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="sim-card" aria-label="Sailboat simulation">
+        <canvas id="simCanvas" width="980" height="620"></canvas>
+        <div class="point-of-sail-pill">
+          <span>Point of Sail</span>
+          <strong id="pointOfSailLabel">Beam Reach</strong>
+        </div>
+        <div class="canvas-top-right">
+          <button id="restartButton" class="restart-control" type="button" title="Restart simulation">
+            <span aria-hidden="true">&#8635;</span> Restart
+          </button>
+          <label class="view-control">
+            <input id="headingUp" type="checkbox" checked />
+            <span>Heading-Up</span>
+          </label>
+        </div>
+        <label class="motor-mode-control">
+          <input id="motorMode" type="checkbox" />
+          <span><strong>Motor</strong><small>Sail down</small></span>
+        </label>
+        <div id="motorControls" class="motor-throttle-control" hidden>
+          <div class="motor-throttle-heading">
+            <span>Throttle</span>
+            <output id="motorValue" for="motorThrottle">35%</output>
+          </div>
+          <div class="motor-throttle-slider">
+            <span>FULL</span>
+            <input id="motorThrottle" type="range" min="0" max="100" step="1" value="35" aria-label="Motor throttle" />
+            <span>IDLE</span>
+          </div>
+        </div>
+        <div class="helm-control">
+          <div class="helm-heading">
+            <span>Rudder</span>
+            <output id="rudderValue" for="rudderAngle">0°</output>
+          </div>
+          <div class="helm-scale" aria-hidden="true">
+            <span>PORT</span>
+            <span>•••</span>
+            <span>•••</span>
+            <span>STARBOARD</span>
+          </div>
+          <input id="rudderAngle" type="range" min="-45" max="45" step="1" value="0" aria-label="Rudder angle; releases to center" />
+          <label class="helm-option"><input id="holdRudder" type="checkbox" checked /> Hold rudder position</label>
+        </div>
+        <div id="sailControls" class="sheet-control">
+          <div class="sheet-heading">
+            <span>Mainsheet</span>
+            <output id="sheetValue" for="sheetTension">70%</output>
+          </div>
+          <div class="sheet-slider-wrap">
+            <span>IN</span>
+            <input id="sheetTension" type="range" min="0" max="100" step="1" value="70" aria-label="Mainsheet tension" />
+            <span>OUT</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="controls" aria-label="Simulator controls">
+        <h2>Basic Mode Controls</h2>
+
+        <div class="control-group two-col">
+          <label for="windDirection">Wind From Direction <span id="windDirValue">315°</span></label>
+          <input id="windDirection" type="range" min="0" max="359" step="1" value="315" />
+          <label for="windSpeed">Wind Speed <span id="windSpeedValue">14 kn</span></label>
+          <input id="windSpeed" type="range" min="0" max="35" step="0.5" value="14" />
+        </div>
+
+        <div class="readouts">
+          <p><strong>Boat Heading:</strong> <span id="headingReadout">0°</span></p>
+          <p><strong>Boat Speed Through Water:</strong> <span id="speedReadout">0.0 kn</span></p>
+          <p><strong>Apparent Wind:</strong> <span id="apparentReadout">0.0 kn</span></p>
+          <p><strong>Lake Position:</strong> <span id="positionReadout">Center Basin</span></p>
+          <p><strong>Navigation:</strong> <span id="navigationReadout">Clear water</span></p>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/math.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/lake.js"></script>
+  <script src="js/physics.js"></script>
+  <script src="js/controls.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
