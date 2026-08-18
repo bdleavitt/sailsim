@@ -246,6 +246,8 @@ SailSim.createRenderer = function createRenderer(canvas, state) {
   }
 
   function drawMiniMap() {
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     const x = canvas.width - 190;
     const y = 180;
     const width = 164;
@@ -275,6 +277,7 @@ SailSim.createRenderer = function createRenderer(canvas, state) {
     ctx.font = "700 10px Space Grotesk";
     ctx.fillStyle = "rgba(255,255,255,0.85)";
     ctx.fillText("LAKE MAP", x + 10, y + 15);
+    ctx.restore();
   }
 
   const POINT_OF_SAIL_BANDS = [
