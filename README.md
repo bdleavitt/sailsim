@@ -2,6 +2,8 @@
 
 A frontend-only HTML5 canvas application for learning points of sail, sail trim, rudder control, and wind-relative boat behavior on a bounded lake.
 
+Try it online: https://bdleavitt.github.io/sailsim/
+
 ## Run Locally
 
 The scripts intentionally use a shared browser namespace rather than JavaScript module imports, so `index.html` works when opened directly with a `file://` URL. A static server is still recommended during development:
