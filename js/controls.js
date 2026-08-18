@@ -136,6 +136,7 @@ SailSim.createControls = function createControls(state) {
 
   inputs.rudderAngle.addEventListener("pointerdown", (event) => {
     holdRudder();
+    rudderIsHeld = true;
     setRudderFromClientX(event.clientX);
     inputs.rudderAngle.setPointerCapture(event.pointerId);
   });

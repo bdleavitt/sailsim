@@ -3,7 +3,7 @@ window.SailSim = window.SailSim || {};
 SailSim.createState = function createState() {
   return {
     rudderDeg: 0,
-    holdRudder: true,
+    holdRudder: false,
     headingUp: true,
     sheetTension: 70,
     motorMode: false,
