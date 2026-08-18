@@ -118,7 +118,7 @@ SailSim.createControls = function createControls(state) {
   }
 
   const holdRudder = () => {
-    rudderIsHeld = true;
+    rudderIsHeld = false;
     stopRudderReturn();
   };
 
